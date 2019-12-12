@@ -43,10 +43,6 @@ Future<int> newEntry(String name) async {
 Future<List<DBEntry>> entries() async {
   final Database db = await database;
 
-  if (!db.isOpen) {
-    return [];
-  }
-
   final List<Map<String, dynamic>> maps = await db.query('entries');
 
   return List.generate(maps.length, (i) {

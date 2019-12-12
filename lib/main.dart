@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool canDeleteTable = true;
+  List<DBEntry> _entries;
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +40,23 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(Icons.indeterminate_check_box),
             onPressed: () {
-                    newDatabase().then((_) {
-                      setState(() {
-                      });
-                    });
-                  },
+              newDatabase().then((_) {
+                setState(() {});
+              });
+            },
           )
         ],
       ),
       body: FutureBuilder(
         future: entries(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (_entries == null && snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          final List<DBEntry> entries = snapshot.data;
-          final List<ListTile> listEntries = entries
+          _entries = snapshot.connectionState == ConnectionState.waiting ? _entries : snapshot.data;
+          final List<ListTile> listEntries = _entries
               .map((DBEntry entry) => ListTile(
                     leading: Text('${entry.id}'),
                     title: Text(entry.name),
