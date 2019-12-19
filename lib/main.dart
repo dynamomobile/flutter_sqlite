@@ -2,7 +2,6 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 import 'db.dart';
-import 'db_entry.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: FutureBuilder(
-        future: entries(),
+        future: allDBEntry(),
         builder: (context, snapshot) {
           if (_entries == null && snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -64,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Icon(Icons.delete),
                       onPressed: () {
                         setState(() {
-                          deleteEntry(entry.id);
+                          deleteDBEntry(entry.id);
                         });
                       },
                     ),
@@ -79,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         onPressed: () {
           generateWordPairs().take(1).forEach((word) {
-            newEntry(word.toString()).then((id) {
+            newDBEntry(word.toString(), 12).then((id) {
               setState(() {
                 print('New entry: $id');
               });
