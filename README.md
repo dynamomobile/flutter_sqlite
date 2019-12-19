@@ -1,6 +1,6 @@
 # sqlite
 
-A new Flutter project.
+Small Flutter project showing sqlite usage.
 
 Codegen of `db.dart` from `db_template.t` and `db_data.yaml` using `yamlt` in the `yamlt` folder.
 
